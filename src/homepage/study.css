@@ -1,0 +1,124 @@
+/* The page's Tailwind build: shadcn's base-nova (preset b26) tokens, with the Clinical Blue palette set on <html>
+   by main.tsx. Copied from the homepage design study (option 10) in the Zakhmban monorepo. */
+@import "tailwindcss" source(none);
+@import "./tw-animate.css";
+@import "./shadcn-tailwind.css";
+
+@source "./";
+@source "../main.tsx";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Vazirmatn, self-hosted (public/fonts/vazirmatn): Google Fonts and most CDNs are blocked in Iran. */
+@font-face {
+  font-family: "Vazirmatn"; font-style: normal; font-weight: 100 900; font-display: fallback;
+  src: url("/fonts/vazirmatn/vazirmatn-arabic-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}
+@font-face {
+  font-family: "Vazirmatn"; font-style: normal; font-weight: 100 900; font-display: fallback;
+  src: url("/fonts/vazirmatn/vazirmatn-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Vazirmatn"; font-style: normal; font-weight: 100 900; font-display: fallback;
+  src: url("/fonts/vazirmatn/vazirmatn-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@theme inline {
+  --font-sans: "Vazirmatn", Tahoma, sans-serif;
+  --font-heading: var(--font-sans);
+  --font-yekan: "Vazirmatn", Tahoma, sans-serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-link: var(--link);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-lane-patient: var(--lane-patient);
+  --color-lane-patient-line: var(--lane-patient-line);
+  --color-lane-therapist: var(--lane-therapist);
+  --color-lane-therapist-line: var(--lane-therapist-line);
+  /* Material 3 shape scale: small 8, medium 12, large 16, extra-large 28. Buttons are pills. */
+  --radius-sm: calc(var(--radius) * 0.667);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.333);
+  --radius-2xl: calc(var(--radius) * 1.667);
+  --radius-3xl: calc(var(--radius) * 2.333);
+  --radius-4xl: calc(var(--radius) * 2.667);
+}
+
+/* The palette's variables are set on <html> by the study, so portals (menus, the sheet) get them too. */
+html:has([data-study]) {
+  --radius: 0.75rem;
+  /* globals.css defines these four names too; point them at the palette so either build's rule lands. */
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-background: var(--background);
+  --color-border: var(--border);
+  /* Audience tints for the lane cards, the same in every palette: faint green for patients, faint blue for therapists. */
+  --lane-patient: #f1f8f3;
+  --lane-patient-line: #dcede1;
+  --lane-therapist: #eff5fc;
+  --lane-therapist-line: #d9e6f5;
+}
+
+[data-study] {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--foreground);
+  background: var(--background);
+}
+
+@layer base {
+  html:has([data-study]) *, html:has([data-study]) ::before, html:has([data-study]) ::after { border-color: var(--border); }
+  [data-study] :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+}
+
+/* The site's own chrome is not part of the study page. */
+body:has([data-study]) > :is(header, footer, .bg-blue-700) { display: none; }
+body:has([data-study]) { background: var(--background, #fff); }
+
+/* Option 8's hero ripples: a copy of the photo's curve drifts outward and fades, like a slow pulse. Desktop pushes it
+   sideways toward the words (scaled from the photo's far edge), phones push it down. */
+@keyframes study-ripple-x {
+  0% { opacity: 0; transform: scaleX(1); }
+  15% { opacity: 0.7; }
+  100% { opacity: 0; transform: scaleX(1.12); }
+}
+@keyframes study-ripple-y {
+  0% { opacity: 0; transform: scaleY(1); }
+  15% { opacity: 0.7; }
+  100% { opacity: 0; transform: scaleY(1.1); }
+}
+
+/* Option 8's meeting point in the lanes: the same slow pulse, as a ring around step five. */
+@keyframes study-ping {
+  0% { opacity: 0; transform: scale(1); }
+  15% { opacity: 0.6; }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-study] *, [data-study] *::before, [data-study] *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
+}
